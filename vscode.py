@@ -30,11 +30,7 @@ def install_extensions_from_file(file_path):
             except subprocess.CalledProcessError as e:
                 logging.error(f"Failed to install extension: {extension}. Error: {str(e)}")
 
-def cleanup_and_archive(dest_folder, archive_name):
-    # Delete .sigzip files
-    for sigzip_file in glob.glob(os.path.join(dest_folder, "*.sigzip")):
-        os.remove(sigzip_file)
-        logging.info(f"Deleted {sigzip_file}")
+def archive_files(dest_folder, archive_name):
 
     # Create tar.gz archive
     with tarfile.open(archive_name, "w:gz") as tar:
@@ -54,4 +50,4 @@ if __name__ == "__main__":
     else:
         file_path = sys.argv[1]
         install_extensions_from_file(file_path)
-        cleanup_and_archive(destination_folder, "vscode-extensions-latest.tar.gz")
+        archive_files(destination_folder, "vscode-extensions-latest.tar.gz")
